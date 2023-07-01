@@ -12,10 +12,11 @@ $mainFont: "Ubuntu";
 }
 
 .wrap_auth {
+  padding: 20px;
   width: 390px;
-  padding: 50px 0 90px 0;
   background: #fff;
   border-radius: 10px;
+  border: 2px solid #403866;
   position: relative;
 }
 
@@ -45,8 +46,8 @@ $mainFont: "Ubuntu";
   padding: 0 20px 0 38px;
   outline: none;
   border: none;
-  &:focus{
-    border:2px solid #403866;
+  &:focus {
+    border: 2px solid #403866;
   }
 }
 
@@ -107,7 +108,7 @@ $mainFont: "Ubuntu";
   text-decoration: none;
 }
 
-button {
+input[type="submit"] {
   font-size: 16px;
   font-weight: 700;
   color: #fff;
@@ -127,7 +128,43 @@ button {
   border: none;
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     background-color: #7674d1;
+  }
+
+  &:disabled {
+    background-color: #403866;
+  }
+}
+
+.error {
+  padding-bottom: 16px;
+  color: red;
+}
+
+.checkboxPassword {
+  text-align: start;
+  & input {
+    margin-right: 10px;
+    margin-bottom: 20px;
+  }
+}
+
+.link_for_auth {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & span {
+    font-size: 18px;
+  }
+
+  & a {
+    font-size: 24px;
+    color: #403866;
+    text-decoration: none;
+    font-weight: 700;
   }
 }
