@@ -1,12 +1,16 @@
 import { Link } from "react-router-dom";
 
 export default function Login() {
+  function onSubmit(event) {
+    event.preventDefault();
+
+  }
+
   return (
     <div className="auth">
       <div className="wrap_auth">
         <form className="form_auth">
           <span className="auth_title">Login</span>
-
           <input
             type="text"
             className="auth_username"
@@ -32,13 +36,12 @@ export default function Login() {
               </a>
             </div>
           </div>
-          <input type="submit" value="Login" />
+          <input onClick={onSubmit} type="submit" value="Login" />
         </form>
         <div className="link_for_auth">
-        <span>or</span>
-        <Link to="singup">Sing Up</Link>
+          <span>or</span>
+          <Link to="singup">Sing Up</Link>
         </div>
-        
       </div>
     </div>
   );
