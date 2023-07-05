@@ -1,0 +1,33 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  .pages {
+    margin: 0 10px;
+    & a {
+      margin: 0 5px;
+      font-size: 24px;
+      padding: 5px 10px;
+      border: 2px solid teal;
+      border-radius: 5px;
+      box-sizing: content-box;
+      cursor: pointer;
+    }
+
+    & a:hover{
+      color: #fff;
+      background-color: #1c5e5e;
+    }
+  }
+}
+
+.arrow {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.activePage {
+  background-color: #2fc8c8;
+  color: white;
+}

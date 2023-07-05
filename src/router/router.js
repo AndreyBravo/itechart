@@ -4,6 +4,7 @@ import Login from "../components/Login";
 import Singup from "../components/Singup";
 import NotFoundPage from "../pages/NotFoundPage";
 import App from "../pages/App";
+import PokemonByName from "../pages/PokemonByName";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/app",
     element: <App />,
+  },
+  {
+    path: "/app/:name",
+    element: <PokemonByName />,
   },
   {
     path: "*",
