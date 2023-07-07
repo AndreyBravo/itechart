@@ -6,18 +6,18 @@ export default function Pagination({
   count,
   changeOffset,
 }) {
-
   const [activePage, setActivePage] = useState(0);
-  
+  const viewPages = 8;
+
   useEffect(() => {
-    const page = JSON.parse(localStorage.getItem('activePage'));
+    const page = JSON.parse(localStorage.getItem("activePage"));
     if (page) {
       setActivePage(page);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('activePage', JSON.stringify(activePage));
+    localStorage.setItem("activePage", JSON.stringify(activePage));
   }, [activePage]);
 
   const pages = useMemo(() => {
@@ -29,30 +29,21 @@ export default function Pagination({
   }, [count, limitPerPage]);
 
   const slicePage = useMemo(() => {
-    if (activePage <= 9) {
-      return pages.slice(0, 11).concat(pages.slice(-1));
-    } else if (activePage + 1 < 20) {
+    if (activePage <= viewPages) {
+      return pages.slice(0, viewPages + 2).concat(pages.slice(-1));
+    } else if (activePage + 1 < pages.length - viewPages) {
+      const part = Math.ceil((activePage + 1) / viewPages);
       return pages
         .slice(0, 1)
-        .concat(pages.slice(9, 20).concat(pages.slice(-1)));
-    } else if (activePage + 1 < 30) {
+        .concat(
+          pages
+            .slice((part - 1) * viewPages - 1, part * viewPages + 1)
+            .concat(pages.slice(-1))
+        );
+    } else if (activePage + 1 <= pages.length) {
       return pages
         .slice(0, 1)
-        .concat(pages.slice(18, 30).concat(pages.slice(-1)));
-    } else if (activePage + 1 < 40) {
-      return pages
-        .slice(0, 1)
-        .concat(pages.slice(28, 40).concat(pages.slice(-1)));
-    } else if (activePage + 1 < 50) {
-      return pages
-        .slice(0, 1)
-        .concat(pages.slice(38, 50).concat(pages.slice(-1)));
-    } else if (activePage + 1 < 60) {
-      return pages
-        .slice(0, 1)
-        .concat(pages.slice(48, 60).concat(pages.slice(-1)));
-    } else if (activePage + 1 <= 65) {
-      return pages.slice(0, 1).concat(pages.slice(58));
+        .concat(pages.slice(pages.length - viewPages - 2));
     }
   }, [pages, activePage]);
 
@@ -77,9 +68,11 @@ export default function Pagination({
 
   return (
     <div className="pagination">
-      <a className="arrow" onClick={onPrev}>&laquo;</a>
+      <a className="arrow" onClick={onPrev}>
+        &laquo;
+      </a>
       <div className="pages">
-        {slicePage.map((page) => (
+        {slicePage?.map((page) => (
           <a
             key={page}
             className={page == activePage ? "activePage" : ""}
@@ -89,7 +82,9 @@ export default function Pagination({
           </a>
         ))}
       </div>
-      <a className="arrow" onClick={onNext}>&raquo; </a>
+      <a className="arrow" onClick={onNext}>
+        &raquo;
+      </a>
     </div>
   );
 }

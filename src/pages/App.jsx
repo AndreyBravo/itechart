@@ -7,7 +7,7 @@ import { useState, useMemo } from "react";
 export default function App() {
   const limit = 20;
   const [offset, setOffset] = useState();
-  const { data } = useGetPokemonsQuery([offset, limit]);
+  const { data = [] } = useGetPokemonsQuery([offset, limit]);
 
   useMemo(() => {
     const page = JSON.parse(localStorage.getItem("activePage"));
