@@ -2,22 +2,32 @@ import { Link } from "react-router-dom";
 import { useGetPokemonsQuery } from "../api/api";
 import PokemonList from "../components/PokemonList";
 import Pagination from "../components/Pagination";
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 export default function App() {
-  const limit = 20;
+  const [limit, setLimit] = useState();
   const [offset, setOffset] = useState();
   const { data = [] } = useGetPokemonsQuery([offset, limit]);
 
-  useMemo(() => {
+  useEffect(() => {
     const page = JSON.parse(localStorage.getItem("activePage"));
     if (page) {
       setOffset(limit * page);
     }
   }, []);
 
+  useEffect(() => {
+    const limitPerPage = JSON.parse(localStorage.getItem("limit"));
+    if (limitPerPage) {
+      setLimit(limitPerPage);
+    }
+  }, []);
+
   function changeOffset(currentOffset) {
     setOffset(currentOffset);
+  }
+  function changeLimit(currentlimit) {
+    setLimit(currentlimit);
   }
 
   return (
@@ -31,6 +41,7 @@ export default function App() {
           limitPerPage={limit}
           count={data?.count}
           changeOffset={changeOffset}
+          changeOfLimit={changeLimit}
         />
       </div>
     </div>

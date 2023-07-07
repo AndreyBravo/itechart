@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
+import PSelect from "./PSelect";
 
 export default function Pagination({
   currentOffset,
   limitPerPage,
   count,
   changeOffset,
+  changeOfLimit,
 }) {
   const [activePage, setActivePage] = useState(0);
   const viewPages = 8;
@@ -66,8 +68,13 @@ export default function Pagination({
     }
   }
 
+  function changeLimit(limit) {
+    changeOfLimit(limit);
+  }
+
   return (
     <div className="pagination">
+      <PSelect changeLimit={(limit) => changeLimit(limit)} />
       <a className="arrow" onClick={onPrev}>
         &laquo;
       </a>
