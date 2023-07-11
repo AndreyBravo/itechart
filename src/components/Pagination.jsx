@@ -7,20 +7,13 @@ export default function Pagination({
   count,
   changeOffset,
   changeOfLimit,
+  typeOfList,
+  changeOfTypeList,
 }) {
   const [activePage, setActivePage] = useState(0);
-  const viewPages = 8;
-
-  useEffect(() => {
-    const page = JSON.parse(localStorage.getItem("activePage"));
-    if (page) {
-      setActivePage(page);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("activePage", JSON.stringify(activePage));
-  }, [activePage]);
+  const viewPages = 5;
+  const optionsLimit = [10, 15, 20];
+  const optionsType = ["card", "list"];
 
   const pages = useMemo(() => {
     const calculatedPages = [];
@@ -29,6 +22,19 @@ export default function Pagination({
     }
     return calculatedPages;
   }, [count, limitPerPage]);
+
+  useMemo(() => {
+    let page = JSON.parse(localStorage.getItem("activePage"));
+    if (activePage <= pages.length) {
+      setActivePage(page);
+    } else {
+      setActivePage(0);
+    }
+  }, [pages,limitPerPage]);
+
+  useEffect(() => {
+    localStorage.setItem("activePage", JSON.stringify(activePage));
+  }, [activePage]);
 
   const slicePage = useMemo(() => {
     if (activePage <= viewPages) {
@@ -72,13 +78,35 @@ export default function Pagination({
     changeOfLimit(limit);
   }
 
+  function changeTypeList(type) {
+    changeOfTypeList(type);
+  }
+
   return (
     <div className="pagination">
-      <PSelect changeLimit={(limit) => changeLimit(limit)} />
-      <a className="arrow" onClick={onPrev}>
-        &laquo;
-      </a>
+      <div className="select_container">
+        <PSelect
+          options={optionsLimit}
+          nameSelected="limit"
+          curruntSelected={limitPerPage}
+          changeSelect={(limit) => changeLimit(limit)}
+        />
+        <label>limit per page</label>
+      </div>
+      <div className="select_container">
+        <PSelect
+          options={optionsType}
+          nameSelected="type"
+          curruntSelected={typeOfList}
+          changeSelect={(type) => changeTypeList(type)}
+        />
+        <label>change type view</label>
+      </div>
+
       <div className="pages">
+        <a className="arrow" onClick={onPrev}>
+          &laquo;
+        </a>
         {slicePage?.map((page) => (
           <a
             key={page}
@@ -88,10 +116,10 @@ export default function Pagination({
             {page + 1}
           </a>
         ))}
+        <a className="arrow" onClick={onNext}>
+          &raquo;
+        </a>
       </div>
-      <a className="arrow" onClick={onNext}>
-        &raquo;
-      </a>
     </div>
   );
 }

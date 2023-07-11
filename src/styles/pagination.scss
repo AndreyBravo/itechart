@@ -1,6 +1,6 @@
 .pagination {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin-top: 15px;
   .pages {
@@ -10,12 +10,12 @@
       font-size: 24px;
       padding: 5px 10px;
       border: 2px solid teal;
-      border-radius: 5px;
+      border-radius: 15px;
       box-sizing: content-box;
       cursor: pointer;
     }
 
-    & a:hover{
+    & a:hover {
       color: #fff;
       background-color: #1c5e5e;
     }
@@ -23,6 +23,9 @@
 }
 
 .arrow {
+  padding: 5px;
+  border: 2px solid teal;
+  border-radius: 40%;
   font-size: 24px;
   cursor: pointer;
 }

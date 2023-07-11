@@ -5,41 +5,56 @@ import Pagination from "../components/Pagination";
 import { useEffect, useState, useMemo } from "react";
 
 export default function App() {
-  const [limit, setLimit] = useState();
+  const [typeList, setTypeList] = useState("list");
+  const [limit, setLimit] = useState(10);
   const [offset, setOffset] = useState();
   const { data = [] } = useGetPokemonsQuery([offset, limit]);
 
   useEffect(() => {
     const page = JSON.parse(localStorage.getItem("activePage"));
-    if (page) {
-      setOffset(limit * page);
-    }
-  }, []);
+    setOffset(limit * page);
+  }, [limit]);
 
-  useEffect(() => {
+  useMemo(() => {
     const limitPerPage = JSON.parse(localStorage.getItem("limit"));
     if (limitPerPage) {
       setLimit(limitPerPage);
     }
   }, []);
 
+  useMemo(() => {
+    const typeName = JSON.parse(localStorage.getItem("type"));
+    if (typeName) {
+      setTypeList(typeName);
+    }
+  }, []);
+
   function changeOffset(currentOffset) {
     setOffset(currentOffset);
   }
+
   function changeLimit(currentlimit) {
     setLimit(currentlimit);
   }
 
+  function changeTypeList(currentType) {
+    setTypeList(currentType);
+  }
+
   return (
     <div className="app">
-      <Link to="/">Go Login</Link>
+      <Link className="link_login" to="/">
+        Go Login
+      </Link>
       <div className="pokemon">
         <h1>Pokemon</h1>
-        <PokemonList pokemons={data?.results} />
+        <PokemonList typeItem={typeList} pokemons={data?.results} />
         <Pagination
           currentOffset={offset}
           limitPerPage={limit}
           count={data?.count}
+          typeOfList={typeList}
+          changeOfTypeList={changeTypeList}
           changeOffset={changeOffset}
           changeOfLimit={changeLimit}
         />

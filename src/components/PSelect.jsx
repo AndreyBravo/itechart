@@ -1,36 +1,40 @@
 import { useState, useEffect, useMemo } from "react";
-import Select from "react-select";
 
-export default function PSelect({  changeLimit }) {
-  const [currentlimit, setCurrentlimit] = useState(10);
+export default function PSelect({
+  nameSelected,
+  curruntSelected,
+  options,
+  changeSelect,
+}) {
+  const [currentlimit, setCurrentlimit] = useState(curruntSelected);
 
   useMemo(() => {
-    const limitPerPage = JSON.parse(localStorage.getItem("limit"));
+    localStorage.setItem(nameSelected, JSON.stringify(curruntSelected));
+  }, [curruntSelected]);
+
+  useEffect(() => {
+    const limitPerPage = JSON.parse(localStorage.getItem(nameSelected));
     if (limitPerPage) {
       setCurrentlimit(limitPerPage);
     }
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("limit", JSON.stringify(currentlimit));
-  }, [currentlimit]);
-
-  const options = [
-    { value: 10, label: "10" },
-    { value: 15, label: "15" },
-    { value: 20, label: "20" },
-  ];
-
   function handleChange(selected) {
-    setCurrentlimit(selected.value);
-    changeLimit(selected.value);
+    changeSelect(selected);
   }
 
   return (
-    <Select
-      value={options.filter((item) => item.value == currentlimit)}
-      options={options}
-      onChange={handleChange}
-    />
+    <div className="selects_list">
+      {options.map((item, index) => (
+        <a
+          className={`option ${item == curruntSelected ? "active_option" : ""} `}
+          key={index}
+          onClick={() => handleChange(item)}
+          href="#"
+        >
+          {item}
+        </a>
+      ))}
+    </div>
   );
 }

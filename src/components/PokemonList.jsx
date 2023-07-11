@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
+import PokemonItem from "./PokemonItem";
 
-export default function PokemonList({ pokemons }) {
+export default function PokemonList({ typeItem, pokemons }) {
   return (
-    <ul className="pokemon_list">
+    <ul className={`pokemon_list ${typeItem == "card"? "pokemon_list_cards":""}`}>
       {pokemons?.map((item) => (
-        <li key={item.name}>
-          <Link to={`/app/${item.name}`}>{item.name}</Link>
-        </li>
+        <PokemonItem typeItem={typeItem} key={item.name} item={item} />
       ))}
     </ul>
   );

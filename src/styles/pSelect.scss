@@ -1,0 +1,28 @@
+.selects_list {
+  margin: 0 10px;
+  padding: 5px;
+  border: 2px solid teal;
+  border-radius: 15px;
+
+  .option {
+    padding: 5px;
+    text-decoration: none;
+    border-left: 2px solid teal;
+    border-radius: 15px;
+    &:hover {
+      color: #fff;
+      background-color: #1c5e5e;
+    }
+  }
+}
+
+.select_container {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+}
+
+.active_option {
+  background: linear-gradient(to right, #2fc8c8, 70%, #fff);
+  color: white;
+}
