@@ -5,12 +5,13 @@ export default function PSelect({
   curruntSelected,
   options,
   changeSelect,
+  isInput,
 }) {
   const [currentlimit, setCurrentlimit] = useState(curruntSelected);
 
-  useMemo(() => {
-    localStorage.setItem(nameSelected, JSON.stringify(curruntSelected));
-  }, [curruntSelected]);
+  useEffect(() => {
+    localStorage.setItem(nameSelected, JSON.stringify(currentlimit));
+  }, [currentlimit]);
 
   useEffect(() => {
     const limitPerPage = JSON.parse(localStorage.getItem(nameSelected));
@@ -19,7 +20,29 @@ export default function PSelect({
     }
   }, []);
 
+  const PInput = () => {
+    return (
+      <input
+        className={`input_limit ${
+          currentlimit == curruntSelected ? "active_option" : ""
+        } `}
+        type="text"
+        value={currentlimit}
+        onChange={handleChangeInput}
+      />
+    );
+  };
+
+  function handleChangeInput(event) {
+    const value = +event.target.value;
+    if (Number.isInteger(value) && value < 50) {
+      setCurrentlimit(value);
+      handleChange(value);
+    }
+  }
+
   function handleChange(selected) {
+    setCurrentlimit(selected);
     changeSelect(selected);
   }
 
@@ -27,7 +50,9 @@ export default function PSelect({
     <div className="selects_list">
       {options.map((item, index) => (
         <a
-          className={`option ${item == curruntSelected ? "active_option" : ""} `}
+          className={`option ${
+            item == curruntSelected ? "active_option" : ""
+          } `}
           key={index}
           onClick={() => handleChange(item)}
           href="#"
@@ -35,6 +60,7 @@ export default function PSelect({
           {item}
         </a>
       ))}
+      {isInput ? <PInput /> : null}
     </div>
   );
 }

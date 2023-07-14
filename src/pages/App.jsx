@@ -46,6 +46,9 @@ export default function App() {
       <Link className="link_login" to="/">
         Go Login
       </Link>
+      <Link className="link_login" to="/favorites">
+        Go Favorites
+      </Link>
       <div className="pokemon">
         <h1>Pokemon</h1>
         <PokemonList typeItem={typeList} pokemons={data?.results} />

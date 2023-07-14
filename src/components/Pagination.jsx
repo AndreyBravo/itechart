@@ -11,7 +11,7 @@ export default function Pagination({
   changeOfTypeList,
 }) {
   const [activePage, setActivePage] = useState(0);
-  const viewPages = 5;
+  const viewPages = 2;
   const optionsLimit = [10, 15, 20];
   const optionsType = ["card", "list"];
 
@@ -30,7 +30,7 @@ export default function Pagination({
     } else {
       setActivePage(0);
     }
-  }, [pages,limitPerPage]);
+  }, [pages, limitPerPage]);
 
   useEffect(() => {
     localStorage.setItem("activePage", JSON.stringify(activePage));
@@ -90,6 +90,7 @@ export default function Pagination({
           nameSelected="limit"
           curruntSelected={limitPerPage}
           changeSelect={(limit) => changeLimit(limit)}
+          isInput={true}
         />
         <label>limit per page</label>
       </div>

@@ -5,6 +5,7 @@ import Singup from "../components/Singup";
 import NotFoundPage from "../pages/NotFoundPage";
 import App from "../pages/App";
 import PokemonByName from "../pages/PokemonByName";
+import FavoritesPage from "../pages/FavoritesPage";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: "/app",
     element: <App />,
+  },
+  {
+    path: "/favorites",
+    element: <FavoritesPage />,
   },
   {
     path: "/app/:name",
